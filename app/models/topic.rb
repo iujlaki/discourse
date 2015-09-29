@@ -14,6 +14,8 @@ class Topic < ActiveRecord::Base
   include LimitedEdit
   extend Forwardable
 
+  attr_accessor :is_advertisement
+
   def_delegator :featured_users, :user_ids, :featured_user_ids
   def_delegator :featured_users, :choose, :feature_topic_users
 

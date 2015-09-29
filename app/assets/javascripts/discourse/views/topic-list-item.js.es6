@@ -5,6 +5,7 @@ export default Ember.View.extend(StringBuffer, {
   rerenderTriggers: ['controller.bulkSelectEnabled', 'topic.pinned'],
   tagName: 'tr',
   rawTemplate: 'list/topic-list-item.raw',
+  adRawTemplate: 'list/topic-list-item-ad.raw',
   classNameBindings: ['controller.checked',
                       ':topic-list-item',
                       'unboundClassNames',
@@ -28,6 +29,10 @@ export default Ember.View.extend(StringBuffer, {
   selected: function() {
     return this.get('controller.selectedRow')===this;
   }.property('controller.selectedRow'),
+
+  isAdvertisement: function () {
+    return this.get('topic.is_advertisement') == true
+  },
 
   unboundClassNames: function() {
     let classes = [];
@@ -55,6 +60,9 @@ export default Ember.View.extend(StringBuffer, {
              this.get('topic.isPinnedUncategorized') ? 2 : 1);
   }.property("topic.isPinnedUncategorized"),
 
+  adColSpan: function() {
+    return this.get('controller.bulkSelectEnabled') ? 7 : 6;
+  }.property(),
 
   hasLikes: function() {
     return this.get('topic.like_count') > 0;

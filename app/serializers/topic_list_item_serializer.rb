@@ -9,7 +9,8 @@ class TopicListItemSerializer < ListableTopicSerializer
              :op_like_count,
              :pinned_globally,
              :bookmarked_post_numbers,
-             :liked_post_numbers
+             :liked_post_numbers,
+             :is_advertisement
 
   has_many :posters, serializer: TopicPosterSerializer, embed: :objects
   has_many :participants, serializer: TopicPosterSerializer, embed: :objects
@@ -50,6 +51,22 @@ class TopicListItemSerializer < ListableTopicSerializer
 
   def bookmarked_post_numbers
     object.user_data.post_action_data[PostActionType.types[:bookmark]]
+  end
+
+  def is_advertisement
+    object.is_advertisement == true
+  end
+
+  def include_bumped?
+    object.created_at.present?
+  end
+
+  def include_seen?
+    object.created_at.present?
+  end
+
+  def include_unseen?
+    include_seen?
   end
 
   def include_participants?

@@ -12,7 +12,15 @@ export default Ember.Mixin.create({
   },
 
   renderString(buffer){
-    const template = Discourse.__container__.lookup('template:' + this.rawTemplate);
+    //const template = Discourse.__container__.lookup('template:' + this.rawTemplate);
+    var tmpl = this.rawTemplate;
+
+    if ( this.isAdvertisement() ) {
+      tmpl = this.adRawTemplate;
+    }
+
+    const template = Discourse.__container__.lookup('template:' + tmpl);
+
     if (template) {
       buffer.push(template(this));
     }
